@@ -22,10 +22,27 @@
 
         </header>
         <main>
-            <div class="container">
-                <div class="row">
-                    
-                </div>
+            <div class="container mt-5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Parking</th>
+                            <th scope="col">Vote</th>
+                            <th scope="col">Distance to center</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($hotels as $hotel) { ?>
+                            <tr>
+                                <?php foreach($hotel as $item) { ?>
+                                    <td><?php echo $item ?></td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
             </div>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
