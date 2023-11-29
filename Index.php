@@ -2,6 +2,11 @@
 
     include __DIR__ . '/model/data.php';
 
+    if(isset($_GET['available'])){
+        $available = $_GET['available'];
+        $hotels = array_filter($hotels, fn($item) => $available == 'all' || $item['parking'] == (bool)$available);
+    };
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +24,16 @@
         <header>
 
             <h1 class="text-center text-danger">PHP Hotels</h1>
+            <nav class="d-flex justify-content-center">
+                <form action="index.php" class="w-50 d-flex" method="GET">
+                    <select class="form-control me-2" type="search" placeholder="Search" name="available" aria-label="Search">
+                        <option value="all">All</option>
+                        <option value="0">Not available</option>
+                        <option value="1">available</option>
+                    </select>
+                    <button class="btn btn-success" type="submit">filtra</button>
+                </form>
+            </nav>
 
         </header>
         <main>
