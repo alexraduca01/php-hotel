@@ -6,6 +6,10 @@
         $available = $_GET['available'];
         $hotels = array_filter($hotels, fn($item) => $available == 'all' || $item['parking'] == (bool)$available);
     };
+    if(isset($_GET['voteFilter'])){
+        $voteFilter = $_GET['voteFilter'];
+        $hotels = array_filter($hotels, fn($item) => $voteFilter == 'all' || $item['vote'] == (integer)$voteFilter);
+    };
 
 ?>
 
@@ -24,12 +28,20 @@
         <header>
 
             <h1 class="text-center text-danger">PHP Hotels</h1>
-            <nav class="d-flex justify-content-center">
-                <form action="index.php" class="w-50 d-flex" method="GET">
+            <nav class="d-flex justify-content-center align-items-center">
+                <form action="index.php" class="w-50 d-flex mb-3" method="GET">
                     <select class="form-control me-2" type="search" placeholder="Search" name="available" aria-label="Search">
                         <option value="all">All</option>
                         <option value="0">Not available</option>
                         <option value="1">available</option>
+                    </select>
+                    <select class="form-control me-2" type="search" placeholder="Search" name="voteFilter" aria-label="Search">
+                        <option value="all">All</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
                     </select>
                     <button class="btn btn-success" type="submit">filtra</button>
                 </form>
@@ -38,26 +50,30 @@
         </header>
         <main>
             <div class="container mt-5">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Parking</th>
-                            <th scope="col">Vote</th>
-                            <th scope="col">Distance to center</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($hotels as $hotel) { ?>
+                <?php if(count($hotels) > 0) { ?>
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <?php foreach($hotel as $item) { ?>
-                                    <td><?php echo $item ?></td>
-                                <?php } ?>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Parking</th>
+                                <th scope="col">Vote</th>
+                                <th scope="col">Distance to center</th>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php foreach($hotels as $hotel) { ?>
+                                <tr>
+                                    <?php foreach($hotel as $item) { ?>
+                                        <td><?php echo $item ?></td>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                <?php } else { ?>
+                    <p class="text-warning fs-1 text-center">Non ci sono hotel che corrispondono ai filtri :(</p>
+                <?php }?>
             </div>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
